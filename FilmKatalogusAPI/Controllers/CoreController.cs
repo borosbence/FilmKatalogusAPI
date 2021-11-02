@@ -11,13 +11,13 @@ namespace FilmKatalogusAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public abstract class MyMDBController<TEntity, TRepository> : ControllerBase
+    public abstract class CoreController<TEntity, TRepository> : ControllerBase
             where TEntity : class, IEntity
             where TRepository : IRepository<TEntity>
     {
         private readonly TRepository repository;
 
-        public MyMDBController(TRepository repository)
+        public CoreController(TRepository repository)
         {
             this.repository = repository;
         }

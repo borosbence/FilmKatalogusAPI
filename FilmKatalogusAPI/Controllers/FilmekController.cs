@@ -13,7 +13,7 @@ namespace FilmKatalogusAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FilmekController : MyMDBController<Film, FilmRepository>
+    public class FilmekController : CoreController<Film, FilmRepository>
     {
         public FilmekController(FilmRepository repository) : base(repository)
         {

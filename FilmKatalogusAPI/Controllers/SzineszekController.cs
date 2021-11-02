@@ -10,7 +10,7 @@ namespace FilmKatalogusAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SzineszekController : MyMDBController<Szinesz, SzineszRepository>
+    public class SzineszekController : CoreController<Szinesz, SzineszRepository>
     {
         public SzineszekController(SzineszRepository repository) : base(repository)
         {
