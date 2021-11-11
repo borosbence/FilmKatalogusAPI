@@ -16,12 +16,13 @@ namespace FilmKatalogusAPI.Data
 
         public DbSet<Film> Filmek { get; set; }
         public DbSet<Szinesz> Szineszek { get; set; }
+        public DbSet<FilmMufaj> FilmMufajok { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySql("server=localhost;user id=root;database=film", ServerVersion.Parse("10.4.21-mariadb"));
+                optionsBuilder.UseMySql("server=localhost;user id=root;database=filmkatalogus", ServerVersion.Parse("10.4.21-mariadb"));
             }
         }
     }

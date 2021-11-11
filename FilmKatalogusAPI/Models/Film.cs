@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,11 +15,13 @@ namespace FilmKatalogusAPI.Models
         [StringLength(60)]
         public string Cim { get; set; }
 
-        [Required]
-        [StringLength(30)]
-        public string Mufaj { get; set; }
-
         [DataType(DataType.Date)]
-        public DateTime BemutatoDatum { get; set; }
+        public DateTime? BemutatoDatum { get; set; }
+
+        [Required]
+        [ForeignKey("FilmMufaj")]
+        public int FilmMufajId { get; set; }
+        public FilmMufaj FilmMufaj { get; set; }
+
     }
 }

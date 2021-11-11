@@ -1,0 +1,2 @@
+add-migration MIGÁRICÓ-NEVE
+update-database
