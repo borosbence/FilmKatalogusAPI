@@ -16,6 +16,7 @@ namespace FilmKatalogusAPI.Data
 
         public DbSet<Film> Filmek { get; set; }
         public DbSet<Szinesz> Szineszek { get; set; }
+        public DbSet<FilmMufaj> FilmMufajok { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
