@@ -18,10 +18,5 @@ namespace FilmKatalogusAPI.Models
         [DataType(DataType.Date)]
         public DateTime? BemutatoDatum { get; set; }
 
-        [Required]
-        [ForeignKey("FilmMufaj")]
-        public int FilmMufajId { get; set; }
-        public FilmMufaj FilmMufaj { get; set; }
-
     }
 }

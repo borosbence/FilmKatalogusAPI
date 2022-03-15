@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FilmKatalogusAPI.Migrations
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,9 +19,7 @@ namespace FilmKatalogusAPI.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Cim = table.Column<string>(type: "varchar(60)", maxLength: 60, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Mufaj = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    BemutatoDatum = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    BemutatoDatum = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -49,6 +47,16 @@ namespace FilmKatalogusAPI.Migrations
                     table.PrimaryKey("PK_Szineszek", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.InsertData(
+                table: "Filmek",
+                columns: new[] { "Id", "BemutatoDatum", "Cim" },
+                values: new object[] { 1, new DateTime(1994, 6, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), "Forrest Gump" });
+
+            migrationBuilder.InsertData(
+                table: "Szineszek",
+                columns: new[] { "Id", "Keresztnev", "Nemzetiseg", "OscarNyertes", "SzuletesiDatum", "Vezeteknev" },
+                values: new object[] { 1, "Tom", "USA", true, new DateTime(1956, 7, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), "Hanks" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

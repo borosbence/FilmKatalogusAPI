@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FilmKatalogusAPI.Migrations
 {
     [DbContext(typeof(FilmContext))]
-    [Migration("20211111185616_filmmufaj")]
-    partial class filmmufaj
+    [Migration("20220315183413_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,33 +33,17 @@ namespace FilmKatalogusAPI.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("varchar(60)");
 
-                    b.Property<int>("FilmMufajId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("FilmMufajId");
 
                     b.ToTable("Filmek");
-                });
 
-            modelBuilder.Entity("FilmKatalogusAPI.Models.FilmMufaj", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Korhatar")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Nev")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FilmMufajok");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BemutatoDatum = new DateTime(1994, 6, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cim = "Forrest Gump"
+                        });
                 });
 
             modelBuilder.Entity("FilmKatalogusAPI.Models.Szinesz", b =>
@@ -92,22 +76,17 @@ namespace FilmKatalogusAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Szineszek");
-                });
 
-            modelBuilder.Entity("FilmKatalogusAPI.Models.Film", b =>
-                {
-                    b.HasOne("FilmKatalogusAPI.Models.FilmMufaj", "FilmMufaj")
-                        .WithMany("Filmek")
-                        .HasForeignKey("FilmMufajId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FilmMufaj");
-                });
-
-            modelBuilder.Entity("FilmKatalogusAPI.Models.FilmMufaj", b =>
-                {
-                    b.Navigation("Filmek");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Keresztnev = "Tom",
+                            Nemzetiseg = "USA",
+                            OscarNyertes = true,
+                            SzuletesiDatum = new DateTime(1956, 7, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Vezeteknev = "Hanks"
+                        });
                 });
 #pragma warning restore 612, 618
         }

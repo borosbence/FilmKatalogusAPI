@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FilmKatalogusAPI.Repositories
 {
-    public interface IRepository<T> where T : class, IEntity
+    public interface IRepository<T> where T : IEntity
     {
         Task<List<T>> GetAll();
         Task<T> Get(int id);

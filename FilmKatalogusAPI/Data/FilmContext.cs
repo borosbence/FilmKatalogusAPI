@@ -16,7 +16,6 @@ namespace FilmKatalogusAPI.Data
 
         public DbSet<Film> Filmek { get; set; }
         public DbSet<Szinesz> Szineszek { get; set; }
-        public DbSet<FilmMufaj> FilmMufajok { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -24,6 +23,11 @@ namespace FilmKatalogusAPI.Data
             {
                 optionsBuilder.UseMySql("server=localhost;user id=root;database=filmkatalogus", ServerVersion.Parse("10.4.21-mariadb"));
             }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Seed();
         }
     }
 }
