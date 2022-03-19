@@ -30,7 +30,9 @@ namespace FilmKatalogusAPI
         {
 
             services.AddControllers();
-            services.AddDbContext<FilmContext>();
+            string connString = Configuration.GetConnectionString("FilmDB");
+            services.AddDbContext<FilmContext>(o => o.UseMySql(
+                connString, ServerVersion.AutoDetect(connString)));
             services.AddScoped<FilmRepository>();
             services.AddScoped<SzineszRepository>();
         }
