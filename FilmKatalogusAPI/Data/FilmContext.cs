@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using FilmKatalogusAPI.Models;
 
 namespace FilmKatalogusAPI.Data
 {
     public class FilmContext : DbContext
     {
+        public FilmContext()
+        {
+            
+        }
+
         public FilmContext (DbContextOptions<FilmContext> options)
             : base(options)
         {
         }
 
-        public DbSet<Film> Filmek { get; set; }
-        public DbSet<Szinesz> Szineszek { get; set; }
-        public DbSet<FilmMufaj> FilmMufajok { get; set; }
+        public DbSet<Film> Filmek { get; set; } = null!;
+        public DbSet<Szinesz> Szineszek { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

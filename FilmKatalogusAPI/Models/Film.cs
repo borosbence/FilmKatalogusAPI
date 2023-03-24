@@ -1,27 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace FilmKatalogusAPI.Models
 {
     public class Film : IEntity
     {
+        public Film()
+        {
+            Szineszek = new HashSet<Szinesz>();
+        }
         public int Id { get; set; }
-
-        [Required]
         [StringLength(60)]
-        public string Cim { get; set; }
-
-        [DataType(DataType.Date)]
+        public string Cim { get; set; } = null!;
         public DateTime? BemutatoDatum { get; set; }
+        public string Mufaj { get; set; }
 
-        [Required]
-        [ForeignKey("FilmMufaj")]
-        public int FilmMufajId { get; set; }
-        public FilmMufaj FilmMufaj { get; set; }
-
+        public ICollection<Szinesz> Szineszek { get; set; }
     }
 }

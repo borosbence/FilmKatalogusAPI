@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using FilmKatalogusAPI;
+﻿using Microsoft.AspNetCore.Mvc;
 using FilmKatalogusAPI.Models;
 using FilmKatalogusAPI.Repositories;
 
@@ -13,9 +6,9 @@ namespace FilmKatalogusAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FilmekController : CoreController<Film, FilmRepository>
+    public class FilmekController : CoreController<Film>
     {
-        public FilmekController(FilmRepository repository) : base(repository)
+        public FilmekController(IGenericRepository<Film> repository) : base(repository)
         {
 
         }

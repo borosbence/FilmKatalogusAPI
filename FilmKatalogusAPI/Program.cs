@@ -1,11 +1,6 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using FilmKatalogusAPI.Data;
+using FilmKatalogusAPI.Models;
+using FilmKatalogusAPI.Repositories;
 
 namespace FilmKatalogusAPI
 {
@@ -13,14 +8,25 @@ namespace FilmKatalogusAPI
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
-        }
+            var builder = WebApplication.CreateBuilder(args);
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+            // Add services to the container.
+
+            builder.Services.AddControllers();
+            builder.Services.AddScoped<IGenericRepository<Film>, GenericRepository<Film, FilmContext>>();
+            builder.Services.AddScoped<IGenericRepository<Szinesz>, GenericRepository<Szinesz, FilmContext>>();
+            builder.Services.AddDbContext<FilmContext>();
+
+            var app = builder.Build();
+
+            // Configure the HTTP request pipeline.
+
+            app.UseAuthorization();
+
+
+            app.MapControllers();
+
+            app.Run();
+        }
     }
 }

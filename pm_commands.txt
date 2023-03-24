@@ -1,2 +1,2 @@
-add-migration MIGÁRICÓ-NEVE
+add-migration MIGRÁCIÓ-NEVE
 update-database

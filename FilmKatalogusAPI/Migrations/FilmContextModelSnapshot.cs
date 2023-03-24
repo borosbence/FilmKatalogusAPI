@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace FilmKatalogusAPI.Migrations
 {
     [DbContext(typeof(FilmContext))]
@@ -14,8 +16,8 @@ namespace FilmKatalogusAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 64)
-                .HasAnnotation("ProductVersion", "5.0.11");
+                .HasAnnotation("ProductVersion", "6.0.15")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("FilmKatalogusAPI.Models.Film", b =>
                 {
@@ -31,12 +33,11 @@ namespace FilmKatalogusAPI.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("varchar(60)");
 
-                    b.Property<int>("FilmMufajId")
-                        .HasColumnType("int");
+                    b.Property<string>("Mufaj")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FilmMufajId");
 
                     b.ToTable("Filmek");
 
@@ -46,34 +47,7 @@ namespace FilmKatalogusAPI.Migrations
                             Id = 1,
                             BemutatoDatum = new DateTime(1994, 6, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Cim = "Forrest Gump",
-                            FilmMufajId = 1
-                        });
-                });
-
-            modelBuilder.Entity("FilmKatalogusAPI.Models.FilmMufaj", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Korhatar")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Nev")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FilmMufajok");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Korhatar = 12,
-                            Nev = "Dráma"
+                            Mufaj = "Dráma"
                         });
                 });
 
@@ -120,20 +94,34 @@ namespace FilmKatalogusAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("FilmKatalogusAPI.Models.Film", b =>
+            modelBuilder.Entity("FilmSzinesz", b =>
                 {
-                    b.HasOne("FilmKatalogusAPI.Models.FilmMufaj", "FilmMufaj")
-                        .WithMany("Filmek")
-                        .HasForeignKey("FilmMufajId")
+                    b.Property<int>("FilmekId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SzineszekId")
+                        .HasColumnType("int");
+
+                    b.HasKey("FilmekId", "SzineszekId");
+
+                    b.HasIndex("SzineszekId");
+
+                    b.ToTable("FilmSzinesz");
+                });
+
+            modelBuilder.Entity("FilmSzinesz", b =>
+                {
+                    b.HasOne("FilmKatalogusAPI.Models.Film", null)
+                        .WithMany()
+                        .HasForeignKey("FilmekId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("FilmMufaj");
-                });
-
-            modelBuilder.Entity("FilmKatalogusAPI.Models.FilmMufaj", b =>
-                {
-                    b.Navigation("Filmek");
+                    b.HasOne("FilmKatalogusAPI.Models.Szinesz", null)
+                        .WithMany()
+                        .HasForeignKey("SzineszekId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

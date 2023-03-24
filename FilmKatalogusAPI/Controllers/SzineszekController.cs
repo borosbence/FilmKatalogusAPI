@@ -1,20 +1,15 @@
-﻿using FilmKatalogusAPI.Data;
-using FilmKatalogusAPI.Models;
+﻿using FilmKatalogusAPI.Models;
+using FilmKatalogusAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FilmKatalogusAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SzineszekController : CoreController<Szinesz, SzineszRepository>
+    public class SzineszekController : CoreController<Szinesz>
     {
-        public SzineszekController(SzineszRepository repository) : base(repository)
+        public SzineszekController(IGenericRepository<Szinesz> repository) : base(repository)
         {
-
         }
     }
 }
