@@ -22,7 +22,9 @@ namespace FilmKatalogusAPI.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySql("server=localhost;user id=root;database=filmkatalogus", ServerVersion.Parse("10.4.21-mariadb"));
+                string localDb = "server=localhost;user id=root;database=filmkatalogus";
+                string remoteDb = "server=db4free.net;user id=borosb;password=d6647e0d;database=borosb";
+                optionsBuilder.UseMySql(remoteDb, ServerVersion.Parse("10.4.21-mariadb"));
             }
         }
 

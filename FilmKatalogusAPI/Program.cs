@@ -22,7 +22,8 @@ namespace FilmKatalogusAPI
             // Configure the HTTP request pipeline.
 
             app.UseAuthorization();
-
+            app.UseCors(options => 
+                options.WithOrigins("*").AllowAnyMethod().AllowAnyHeader());
 
             app.MapControllers();
 
