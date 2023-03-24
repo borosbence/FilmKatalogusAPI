@@ -14,20 +14,18 @@ namespace FilmKatalogusAPI.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Filmek",
+                name: "FilmMufajok",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Cim = table.Column<string>(type: "varchar(60)", maxLength: 60, nullable: false)
+                    Nev = table.Column<string>(type: "varchar(60)", maxLength: 60, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    BemutatoDatum = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    Mufaj = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    Korhatar = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Filmek", x => x.Id);
+                    table.PrimaryKey("PK_FilmMufajok", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -53,56 +51,59 @@ namespace FilmKatalogusAPI.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "FilmSzinesz",
+                name: "Filmek",
                 columns: table => new
                 {
-                    FilmekId = table.Column<int>(type: "int", nullable: false),
-                    SzineszekId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Cim = table.Column<string>(type: "varchar(60)", maxLength: 60, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    BemutatoDatum = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    FilmMufajId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FilmSzinesz", x => new { x.FilmekId, x.SzineszekId });
+                    table.PrimaryKey("PK_Filmek", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FilmSzinesz_Filmek_FilmekId",
-                        column: x => x.FilmekId,
-                        principalTable: "Filmek",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_FilmSzinesz_Szineszek_SzineszekId",
-                        column: x => x.SzineszekId,
-                        principalTable: "Szineszek",
+                        name: "FK_Filmek_FilmMufajok_FilmMufajId",
+                        column: x => x.FilmMufajId,
+                        principalTable: "FilmMufajok",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.InsertData(
-                table: "Filmek",
-                columns: new[] { "Id", "BemutatoDatum", "Cim", "Mufaj" },
-                values: new object[] { 1, new DateTime(1994, 6, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), "Forrest Gump", "Dráma" });
+                table: "FilmMufajok",
+                columns: new[] { "Id", "Korhatar", "Nev" },
+                values: new object[] { 1, 12, "Dráma" });
 
             migrationBuilder.InsertData(
                 table: "Szineszek",
                 columns: new[] { "Id", "Keresztnev", "Nemzetiseg", "OscarNyertes", "SzuletesiDatum", "Vezeteknev" },
                 values: new object[] { 1, "Tom", "USA", true, new DateTime(1956, 7, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), "Hanks" });
 
+            migrationBuilder.InsertData(
+                table: "Filmek",
+                columns: new[] { "Id", "BemutatoDatum", "Cim", "FilmMufajId" },
+                values: new object[] { 1, new DateTime(1994, 6, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), "Forrest Gump", 1 });
+
             migrationBuilder.CreateIndex(
-                name: "IX_FilmSzinesz_SzineszekId",
-                table: "FilmSzinesz",
-                column: "SzineszekId");
+                name: "IX_Filmek_FilmMufajId",
+                table: "Filmek",
+                column: "FilmMufajId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "FilmSzinesz");
-
-            migrationBuilder.DropTable(
                 name: "Filmek");
 
             migrationBuilder.DropTable(
                 name: "Szineszek");
+
+            migrationBuilder.DropTable(
+                name: "FilmMufajok");
         }
     }
 }

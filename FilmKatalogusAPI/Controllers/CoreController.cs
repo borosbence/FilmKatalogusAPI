@@ -9,7 +9,7 @@ namespace FilmKatalogusAPI.Controllers
     public abstract class CoreController<TEntity> : ControllerBase
         where TEntity : class, IEntity
     {
-        private readonly IGenericRepository<TEntity> _repository;
+        protected readonly IGenericRepository<TEntity> _repository;
 
         public CoreController(IGenericRepository<TEntity> repository)
         {
@@ -18,14 +18,14 @@ namespace FilmKatalogusAPI.Controllers
 
         // GET: api/[controller]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TEntity>>> Get()
+        public virtual async Task<ActionResult<IEnumerable<TEntity>>> GetAllAsync()
         {
             return await _repository.GetAllAsync();
         }
 
         // GET: api/[controller]/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TEntity>> Get(int id)
+        public virtual async Task<ActionResult<TEntity>> GetAsync(int id)
         {
             var enttiy = await _repository.GetAsync(id);
             if (enttiy == null)
@@ -37,7 +37,7 @@ namespace FilmKatalogusAPI.Controllers
 
         // PUT: api/[controller]/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, TEntity entity)
+        public virtual async Task<IActionResult> PutAsync(int id, TEntity entity)
         {
             if (id != entity.Id)
             {
@@ -49,7 +49,7 @@ namespace FilmKatalogusAPI.Controllers
 
         // POST: api/[controller]
         [HttpPost]
-        public async Task<ActionResult<TEntity>> Post(TEntity entity)
+        public virtual async Task<ActionResult<TEntity>> PostAsync(TEntity entity)
         {
             await _repository.AddAsync(entity);
             return CreatedAtAction("Get", new { id = entity.Id }, entity);
@@ -57,7 +57,7 @@ namespace FilmKatalogusAPI.Controllers
 
         // DELETE: api/[controller]/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public virtual async Task<IActionResult> DeleteAsync(int id)
         {
             var entity = await _repository.GetAsync(id);
             if (entity == null)

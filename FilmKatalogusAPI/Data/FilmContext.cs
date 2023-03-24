@@ -15,6 +15,7 @@ namespace FilmKatalogusAPI.Data
         {
         }
 
+        public DbSet<FilmMufaj> FilmMufajok { get; set; } = null!;
         public DbSet<Film> Filmek { get; set; } = null!;
         public DbSet<Szinesz> Szineszek { get; set; } = null!;
 

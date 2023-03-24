@@ -33,11 +33,12 @@ namespace FilmKatalogusAPI.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("varchar(60)");
 
-                    b.Property<string>("Mufaj")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("FilmMufajId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FilmMufajId");
 
                     b.ToTable("Filmek");
 
@@ -47,7 +48,34 @@ namespace FilmKatalogusAPI.Migrations
                             Id = 1,
                             BemutatoDatum = new DateTime(1994, 6, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Cim = "Forrest Gump",
-                            Mufaj = "Dráma"
+                            FilmMufajId = 1
+                        });
+                });
+
+            modelBuilder.Entity("FilmKatalogusAPI.Models.FilmMufaj", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("Korhatar")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nev")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("varchar(60)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FilmMufajok");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Korhatar = 12,
+                            Nev = "Dráma"
                         });
                 });
 
@@ -94,34 +122,15 @@ namespace FilmKatalogusAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("FilmSzinesz", b =>
+            modelBuilder.Entity("FilmKatalogusAPI.Models.Film", b =>
                 {
-                    b.Property<int>("FilmekId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SzineszekId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FilmekId", "SzineszekId");
-
-                    b.HasIndex("SzineszekId");
-
-                    b.ToTable("FilmSzinesz");
-                });
-
-            modelBuilder.Entity("FilmSzinesz", b =>
-                {
-                    b.HasOne("FilmKatalogusAPI.Models.Film", null)
+                    b.HasOne("FilmKatalogusAPI.Models.FilmMufaj", "FilmMufaj")
                         .WithMany()
-                        .HasForeignKey("FilmekId")
+                        .HasForeignKey("FilmMufajId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FilmKatalogusAPI.Models.Szinesz", null)
-                        .WithMany()
-                        .HasForeignKey("SzineszekId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("FilmMufaj");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,5 +1,6 @@
 ﻿using FilmKatalogusAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace FilmKatalogusAPI.Repositories
 {
@@ -13,14 +14,27 @@ namespace FilmKatalogusAPI.Repositories
             _context = context;
         }
 
-        public async Task<List<TEntity>> GetAllAsync()
+        public async Task<List<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[] includes)
         {
-            return await _context.Set<TEntity>().ToListAsync();
+            // return await _context.Set<TEntity>().ToListAsync();
+
+            IQueryable<TEntity> query = _context.Set<TEntity>();
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+            return await query.ToListAsync();
         }
 
-        public async Task<TEntity?> GetAsync(int id)
+        public async Task<TEntity?> GetAsync(int id, params Expression<Func<TEntity, object>>[] includes)
         {
-            return await _context.Set<TEntity>().FindAsync(id);
+            // return await _context.Set<TEntity>().FindAsync(id);
+            IQueryable<TEntity> query = _context.Set<TEntity>();
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+            return await query.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task AddAsync(TEntity entity)
@@ -35,7 +49,7 @@ namespace FilmKatalogusAPI.Repositories
             if (dbEntity != null)
             {
                 _context.Entry(dbEntity).CurrentValues.SetValues(entity);
-                // _context.Update(entity);
+                // _context.Set<TEntity>().Update(dbEntity);
                 await _context.SaveChangesAsync();
             }
         }
