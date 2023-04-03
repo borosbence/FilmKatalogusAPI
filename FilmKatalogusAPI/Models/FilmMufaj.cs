@@ -2,7 +2,7 @@
 
 namespace FilmKatalogusAPI.Models
 {
-    public class FilmMufaj
+    public class FilmMufaj : IEntity
     {
         public int Id { get; set; }
         [StringLength(60)]
